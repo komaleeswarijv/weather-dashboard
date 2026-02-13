@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Weather Monitoring Dashboard</title>
+  <title>Weather Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -25,7 +25,7 @@
 
 <body>
 
-<h1>🌦 Weather Monitoring System</h1>
+<h1>🌦 Weather Monitoring Dashboard</h1>
 
 <div class="card">
   <h2>Temperature</h2>
@@ -37,14 +37,26 @@
   <p id="hum">Loading...</p>
 </div>
 
+<div class="card">
+  <h2>Pressure</h2>
+  <p id="pressure">Loading...</p>
+</div>
+
+<div class="card">
+  <h2>Light Level</h2>
+  <p id="light">Loading...</p>
+</div>
+
 <script>
   function loadData() {
     fetch("https://api.thingspeak.com/channels/3260920/feeds.json?results=1")
       .then(response => response.json())
       .then(data => {
         let feed = data.feeds[0];
-        document.getElementById("temp").innerHTML = feed.field1 + " °C";
-        document.getElementById("hum").innerHTML = feed.field2 + " %";
+        document.getElementById("temp").innerText = feed.field1 + " °C";
+        document.getElementById("hum").innerText = feed.field2 + " %";
+        document.getElementById("pressure").innerText = feed.field3 + " hPa";
+        document.getElementById("light").innerText = feed.field4;
       });
   }
 
