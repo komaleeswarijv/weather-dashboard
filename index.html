@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Monitoring Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🌦 Weather Monitoring System</h1>
+
+<div class="card">
+  <h2>Temperature</h2>
+  <p id="temp">Loading...</p>
+</div>
+
+<div class="card">
+  <h2>Humidity</h2>
+  <p id="hum">Loading...</p>
+</div>
+
+<script>
+  function loadData() {
+    fetch("https://api.thingspeak.com/channels/3260920/feeds.json?results=1")
+      .then(response => response.json())
+      .then(data => {
+        let feed = data.feeds[0];
+        document.getElementById("temp").innerHTML = feed.field1 + " °C";
+        document.getElementById("hum").innerHTML = feed.field2 + " %";
+      });
+  }
+
+  loadData();
+  setInterval(loadData, 15000); // Refresh every 15 sec
+</script>
+
+</body>
+</html>
